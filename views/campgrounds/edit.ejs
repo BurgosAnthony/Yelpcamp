@@ -1,0 +1,59 @@
+<!-- the code below is transferring a boilerplate.ejs into this webpage -->
+<% layout('/layout/boilerplate') %>
+    <div class="row">
+        <h1 class="text-center"> Edit Campground</h1>
+        <div class="col-md-6 offset-md-3">
+            <form enctype="multipart/form-data" novalidate class="validated-form"
+                action="/campgrounds/<%= campground._id %>?_method=PUT " method="POST">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" name="campground[title]" id="title"
+                        value="<%= campground.title %> " required>
+                    <div class="valid-feedback">Nice update!</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" name="campground[location]" id="location"
+                        value="<%= campground.location %> " required>
+                    <div class="valid-feedback">So it was actually somewhere else? Okay...</div>
+                </div>
+                <!-- <div class="mb-3">
+                    <label class="form-label" for="image">Add Images</label>
+                    <input multiple type="file" name="image" id="image">
+                </div> -->
+                <div class="mb-3">
+                    <label for="price" class="form-label">Campground Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input type="text" id="price" class="form-control" name="campground[price]" placeholder="0.00"
+                            aria-label="price" aria-describedby="price-label" value="<%= campground.price %> " required>
+                        <div class="valid-feedback">What a fair price!</div>
+                    </div>
+                </div>
+
+                <div class=" mb-3">
+                    <label class="form-label" for="description">Description URL</label>
+                    <textarea class="form-control" type="text" name="campground[description]" id="description"
+                        required><%= campground.description %> </textarea>
+                    <div class="valid-feedback">You should be an author!</div>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Add more image(s)</label>
+                    <input name="image" class="form-control" type="file" id="image" multiple>
+                </div>
+                <div class="mb-3">
+                    <% campground.images.forEach(function(img, i) { %>
+                        <img src="<%=img.thumbnail %>" class="img-thumbnail" alt="">
+                        <div class="form-check-inline">
+                            <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%=img.filename%>">
+                        </div>
+                        <label for="image-<%=i%>">Delete?</label>
+                        <% })%>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-info">Update Campground</button>
+                </div>
+            </form>
+            <a href="/campgrounds/<%= campground._id%>">All Campgrounds</a>
+        </div>
+    </div>
